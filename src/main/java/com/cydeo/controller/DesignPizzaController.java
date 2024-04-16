@@ -5,6 +5,7 @@ import com.cydeo.model.Pizza;
 import com.cydeo.repository.PizzaRepository;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 
 import java.util.UUID;
@@ -12,11 +13,16 @@ import java.util.UUID;
 @Controller
 public class DesignPizzaController {
 
-    private PizzaRepository pizzaRepository;
+    private final PizzaRepository pizzaRepository;
 
-    @PostMapping
+    public DesignPizzaController(PizzaRepository pizzaRepository) {
+        this.pizzaRepository = pizzaRepository;
+    }
+
+    @GetMapping("/design")
     public String showDesignForm(Model model) {
 
+        model.addAttribute("pizza",new Pizza());
         model.addAttribute("cheeses", DataGenerator.cheeseTypeList);
         model.addAttribute("sauces", DataGenerator.sauceTypeList);
         model.addAttribute("toppings", DataGenerator.toppingTypeList);
